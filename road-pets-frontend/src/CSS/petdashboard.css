@@ -27,8 +27,8 @@
 }
 
 .pet-sidebar .list-group-item.active {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #ff914d;
+  border-color: #ff914d;
 }
 
 .pet-details {
@@ -67,7 +67,7 @@
 }
 
 .health-notifications h5 {
-  color: #0d6efd;
+  color: #ff914d;
   border-bottom: 1px solid #dee2e6;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
@@ -75,7 +75,7 @@
 
 .health-notifications .alert {
   border-radius: 8px;
-  border-left: 4px solid #0d6efd;
+  border-left: 4px solid #ff914d;
 }
 
 .health-notifications .badge {
