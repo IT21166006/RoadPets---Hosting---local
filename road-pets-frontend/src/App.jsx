@@ -13,6 +13,8 @@ import Signup from './components/Signup';
 import Profile from './components/Profile';
 import AdminDashboard from './components/AdminDashboard';
 import Petdashboard from './components/Petdashboard'
+import ForgotPassword from './pages/Forgotpassword';
+import ResetPassword from './pages/ResetPassword';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -40,6 +42,8 @@ function App() {
         <Route path="/banner" element={<Banner />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/profile" element={
           <ProtectedRoute>
             <Profile />
