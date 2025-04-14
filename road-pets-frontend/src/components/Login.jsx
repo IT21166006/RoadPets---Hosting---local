@@ -114,7 +114,9 @@ function Login() {
                                 >
                                     {isLoading ? 'Logging in...' : 'Login'}
                                 </button>
-                                <br></br>
+                                <div className="d-flex justify-content-between mt-2">
+                                    <a href="/forgot-password" style={{ color: '#ff914d' }}>Forgot Password?</a>
+                                </div>
                                 <br></br>
                                 <div className="d-flex justify-content-center">
                                 <p>If you have not an account <a href="/signup">Signup</a></p>
