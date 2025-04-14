@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import admincontrol from './AdminControl';
 
 function AdminDashboard() {
     const [message, setMessage] = useState('');
@@ -24,7 +25,7 @@ function AdminDashboard() {
 
     return (
         <div className="container mt-5">
-            <h2>Admin Dashboard</h2>
+            <admincontrol />
             <p>{message}</p>
         </div>
     );
