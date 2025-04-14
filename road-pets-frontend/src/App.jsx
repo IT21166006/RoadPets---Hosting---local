@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Navbar from "./components/Navbar";
 import Gallery from "./components/Gallery";
 import Banner from "./components/Banner";
-import Home from "../src/pages/Home"; 
+import Home from "../src/pages/Home";
 import Admin from "../src/pages/Admin";
-import Postform from "./components/PostForm"; 
+import Postform from "./components/PostForm";
 import Footer from "./components/Footer"
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -15,6 +15,7 @@ import AdminDashboard from './components/AdminDashboard';
 import Petdashboard from './components/Petdashboard'
 import ForgotPassword from './pages/Forgotpassword';
 import ResetPassword from './pages/ResetPassword';
+import Store from './pages/Store'
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -39,6 +40,9 @@ function App() {
             <Petdashboard />
           </ProtectedRoute>
         } />
+
+        <Route path="/store" element={<Store />} />
+
         <Route path="/banner" element={<Banner />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
