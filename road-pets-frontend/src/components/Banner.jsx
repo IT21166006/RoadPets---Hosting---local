@@ -1,8 +1,8 @@
 // Banner.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faUsers, faDog, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faUsers, faDog, faHome, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const BannerContainer = styled.div`
   display: flex;
@@ -67,6 +67,20 @@ const LearnMoreButton = styled.button`
 `;
 
 const Banner = () => {
+  const [visitorCount, setVisitorCount] = useState(0);
+
+  useEffect(() => {
+    // Using localStorage to simulate visitor counting
+    let count = localStorage.getItem('visitorCount');
+    if (!count) {
+      count = 1;
+    } else {
+      count = parseInt(count, 10) + 1;
+    }
+    localStorage.setItem('visitorCount', count);
+    setVisitorCount(count);
+  }, []);
+
   return (
     <BannerContainer>
       <TextContainer>
@@ -95,6 +109,11 @@ const Banner = () => {
           <FontAwesomeIcon icon={faHome} aria-label="districts" size="2x" style={{ color: '#E67E22' }} />
           <StatNumber>2030</StatNumber>
           <StatLabel>HOME FOR EVERY PET</StatLabel>
+        </StatItem>
+        <StatItem>
+          <FontAwesomeIcon icon={faEye} aria-label="visitors" size="2x" style={{ color: '#E67E22' }} />
+          <StatNumber>{visitorCount}</StatNumber>
+          <StatLabel>VISITORS</StatLabel>
         </StatItem>
       </StatsContainer>
     </BannerContainer>
