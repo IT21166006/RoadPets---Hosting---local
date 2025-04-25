@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
-exports.authenticateToken = (req, res, next) => {
+export const authenticateToken = (req, res, next) => {
     const authHeader = req.header('Authorization');
     const token = authHeader && authHeader.split(' ')[1];
     
@@ -19,7 +19,7 @@ exports.authenticateToken = (req, res, next) => {
     }
 };
 
-exports.authorizeRole = (roles) => (req, res, next) => {
+export const authorizeRole = (roles) => (req, res, next) => {
     if (!roles.includes(req.user.role)) {
         return res.status(403).json({ error: 'Access forbidden' });
     }

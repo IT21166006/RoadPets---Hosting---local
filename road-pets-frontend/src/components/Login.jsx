@@ -32,7 +32,7 @@ function Login() {
                 if (response.data.user) {
                     localStorage.setItem('user', JSON.stringify(response.data.user));
                 }
-                navigate('/profile');
+                navigate('/');
             } else {
                 setError('Invalid response from server');
             }
