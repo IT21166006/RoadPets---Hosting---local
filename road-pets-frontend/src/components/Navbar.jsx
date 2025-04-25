@@ -72,19 +72,31 @@ const Navbar = () => {
               <>
                 <li className="nav-item px-2">
                   <a className="btn-signup" href="/signup">SignUp</a>
-                  
                 </li>
                 <li className="nav-item px-2">
                   <a className="btn-signup" href="/login">Login</a>
                 </li>
               </>
-            ) : (
-              <li className="nav-item px-2">
-                <a href="/profile">
-                  <AccountCircleIcon style={{ color: 'black', fontSize: '50px', cursor: 'pointer' }} />
-                </a>
-              </li>
-            )}
+              ) : (
+                <>
+                  <li className="nav-item px-2">
+                    <a href="/profile">
+                      <AccountCircleIcon style={{ color: 'black', fontSize: '50px', cursor: 'pointer' }} />
+                    </a>
+                  </li>
+                  <li className="nav-item" style={{ fontSize: '24px', verticalAlign: 'middle', marginRight: '5px', marginTop: '5px' }}>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        localStorage.clear();
+                        navigate('/login');
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
+              )}
           </ul>
         </div>
       </div>
