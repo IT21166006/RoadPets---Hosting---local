@@ -336,7 +336,7 @@ const PostForm = () => {
 
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn btn-secondary"
                                     onClick={() => handleCrop(index)}
                                 >
                                     Crop Image
@@ -352,7 +352,7 @@ const PostForm = () => {
 
                         <button
                             type="submit"
-                            className="btn btn-primary w-100 "
+                            className="btn btn-secondary w-100 "
                             disabled={!name || !location || !description || images.length === 0}
                         >
                             Create Post
