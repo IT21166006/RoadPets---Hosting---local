@@ -427,7 +427,7 @@ const PetDashboard = () => {
   if (loading) {
     return (
       <div className="container mt-5 text-center">
-        <div className="spinner-border text-primary" role="status">
+        <div className="spinner-border text-secondary" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
         <p className="mt-2">Loading your pets...</p>
@@ -440,7 +440,7 @@ const PetDashboard = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2><FaPaw className="me-2" />My Pets</h2>
         <Button
-          variant="primary"
+          variant="secondary"
           onClick={() => setShowModal(true)}
           className="d-flex align-items-center"
         >
@@ -473,7 +473,7 @@ const PetDashboard = () => {
                   onClick={() => setCurrentPet(pet)}
                 >
                   <span>{pet.name}</span>
-                  <span className="badge bg-primary rounded-pill">
+                  <span className="badge bg-secondary rounded-pill">
                     {calculateAge(pet.petbirthday)} years
                   </span>
                 </button>
@@ -489,7 +489,7 @@ const PetDashboard = () => {
                   <h3 className="mb-0">{currentPet.name}</h3>
                   <div>
                     <Button
-                      variant="outline-primary"
+                      variant="outline-secondary"
                       size="sm"
                       className="me-2"
                       onClick={() => handleEditPet(currentPet)}
@@ -544,7 +544,7 @@ const PetDashboard = () => {
                                   {recommendations.map((rec, index) => (
                                     <div key={index} className="mb-2 p-2 bg-light rounded">
                                       <div className="d-flex justify-content-between">
-                                        <Badge bg="primary">{rec.age}</Badge>
+                                        <Badge bg="secondary">{rec.age}</Badge>
                                         <Badge bg="success">{rec.purpose}</Badge>
                                       </div>
                                       <p className="mt-2 mb-0"><strong>Vaccines/Treatments:</strong> {rec.vaccine}</p>
@@ -668,7 +668,7 @@ const PetDashboard = () => {
                   style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '10px' }}
                 />
                 <Button
-                  variant="outline-primary"
+                  variant="outline-secondary"
                   size="sm"
                   onClick={() => handleCrop(index)}
                   className="mb-3"
@@ -679,7 +679,7 @@ const PetDashboard = () => {
             ))}
 
             <div className="d-grid gap-2">
-              <Button variant="primary" type="submit">
+              <Button variant="secondary" type="submit">
                 Add Pet
               </Button>
               <Button variant="outline-secondary" onClick={handleCloseModal}>
@@ -765,7 +765,7 @@ const PetDashboard = () => {
                   style={{ maxWidth: '100%', maxHeight: '300px', marginBottom: '10px' }}
                 />
                 <Button
-                  variant="outline-primary"
+                  variant="outline-secondary"
                   size="sm"
                   onClick={() => handleCrop(index)}
                   className="mb-3"
@@ -776,7 +776,7 @@ const PetDashboard = () => {
             ))}
 
             <div className="d-grid gap-2">
-              <Button variant="primary" type="submit">
+              <Button variant="secondary" type="submit">
                 Update Pet
               </Button>
               <Button variant="outline-secondary" onClick={handleCloseEditModal}>
