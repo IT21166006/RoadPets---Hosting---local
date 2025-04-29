@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import Gallery from "./components/Gallery";
 import Banner from "./components/Banner";
 import Home from "../src/pages/Home";
-import Admin from "../src/pages/Admin";
 import Postform from "./components/PostForm";
 import Footer from "./components/Footer"
 import Login from './components/Login';
@@ -17,6 +16,8 @@ import ForgotPassword from './pages/Forgotpassword';
 import ResetPassword from './pages/ResetPassword';
 import Store from './pages/Store'
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
+import CharityRegfrom from './components/Charity/CharityRegform'
+
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -49,6 +50,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/charityreg" element={<CharityRegfrom />} />
+        
         <Route path="/profile" element={
           <ProtectedRoute>
             <Profile />
