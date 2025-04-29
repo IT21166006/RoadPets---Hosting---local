@@ -72,10 +72,15 @@ router.get('/user', authenticateToken, async (req, res) => {
 // Update post
 router.put('/:id', authenticateToken, async (req, res) => {
     try {
-        const post = await Post.findOne({ _id: req.params.id, user: req.user.userId });
+        const post = await Post.findById(req.params.id);
         
         if (!post) {
-            return res.status(404).json({ error: 'Post not found or unauthorized' });
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        // Check if user is admin or the post owner
+        if (req.user.role !== 'admin' && post.user.toString() !== req.user.userId) {
+            return res.status(403).json({ error: 'Unauthorized to update this post' });
         }
 
         const updatedPost = await Post.findByIdAndUpdate(
@@ -94,10 +99,15 @@ router.put('/:id', authenticateToken, async (req, res) => {
 // Delete post
 router.delete('/:id', authenticateToken, async (req, res) => {
     try {
-        const post = await Post.findOne({ _id: req.params.id, user: req.user.userId });
+        const post = await Post.findById(req.params.id);
         
         if (!post) {
-            return res.status(404).json({ error: 'Post not found or unauthorized' });
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        // Check if user is admin or the post owner
+        if (req.user.role !== 'admin' && post.user.toString() !== req.user.userId) {
+            return res.status(403).json({ error: 'Unauthorized to delete this post' });
         }
 
         await Post.findByIdAndDelete(req.params.id);
