@@ -1,8 +1,10 @@
 // src/components/AdminControl.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AdminControl = () => {
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [editingPost, setEditingPost] = useState(null);
     const [formData, setFormData] = useState({
@@ -12,27 +14,52 @@ const AdminControl = () => {
         images: []
     });
 
+    // Check if user is admin on component mount
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || user.role !== 'admin') {
+            navigate('/login');
+            return;
+        }
+    }, [navigate]);
+
     // Fetch all posts on component mount
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/posts');
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:5000/api/posts', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setPosts(response.data);
             } catch (error) {
                 console.error('Error fetching posts:', error);
+                if (error.response?.status === 401 || error.response?.status === 403) {
+                    navigate('/login');
+                }
             }
         };
         fetchPosts();
-    }, []);
+    }, [navigate]);
 
     // Handle delete post
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/posts/${id}`);
+            const token = localStorage.getItem('token');
+            await axios.delete(`http://localhost:5000/api/posts/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setPosts(posts.filter(post => post._id !== id));
             alert('Post deleted successfully!');
         } catch (error) {
             console.error('Error deleting post:', error);
+            if (error.response?.status === 401 || error.response?.status === 403) {
+                navigate('/login');
+            }
             alert('Failed to delete post.');
         }
     };
@@ -52,16 +79,30 @@ const AdminControl = () => {
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/api/posts/${editingPost}`, formData);
+            const token = localStorage.getItem('token');
+            await axios.put(`http://localhost:5000/api/posts/${editingPost}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setPosts(posts.map(post => (post._id === editingPost ? { ...post, ...formData } : post)));
             setEditingPost(null);
             alert('Post updated successfully!');
             setFormData({ name: '', phoneNumber: '', location: '', images: [] });
         } catch (error) {
             console.error('Error updating post:', error);
+            if (error.response?.status === 401 || error.response?.status === 403) {
+                navigate('/login');
+            }
             alert('Failed to update post.');
         }
     };
+
+    // Check if user is admin before rendering
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || user.role !== 'admin') {
+        return null;
+    }
 
     return (
         <div>
