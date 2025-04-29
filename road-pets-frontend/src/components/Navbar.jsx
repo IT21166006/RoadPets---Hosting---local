@@ -7,10 +7,12 @@ import PetsIcon from '@mui/icons-material/Pets';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import PagesIcon from '@mui/icons-material/Pages';
 import HomeIcon from "@mui/icons-material/Home";
-
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const Navbar = () => {
   const isAuthenticated = localStorage.getItem('token') !== null;
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isAdmin = user && user.role === 'admin';
   const navigate = useNavigate();
 
   return (
@@ -42,7 +44,7 @@ const Navbar = () => {
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item">
               <a className="nav-link nav-link-large" href="/">
-              <HomeIcon style={{ fontSize: '24px', verticalAlign: 'middle', marginRight: '5px' }} />
+              <HomeIcon style={{ fontSize: '24px', verticalAlign: '-4px', marginRight: '5px' }} />
               Home</a>
             </li>
             
@@ -50,21 +52,29 @@ const Navbar = () => {
               <>
                 <li className="nav-item">
                   <a className="nav-link nav-link-large" href="/create">
-                  <PagesIcon style={{ fontSize: '24px', verticalAlign: 'middle', marginRight: '5px' }} />
+                  <PagesIcon style={{ fontSize: '24px', verticalAlign: '-4px', marginRight: '5px' }} />
                   New Post</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link nav-link-large" href="/petdashboard">
-                    <PetsIcon style={{ fontSize: '24px', verticalAlign: 'middle', marginRight: '5px' }} />
+                    <PetsIcon style={{ fontSize: '24px', verticalAlign: '-4px', marginRight: '5px' }} />
                     My Pets
                   </a>
                 </li>
+                {isAdmin && (
+                  <li className="nav-item">
+                    <a className="nav-link nav-link-large" href="/admin">
+                      <AdminPanelSettingsIcon style={{ fontSize: '24px', verticalAlign: '-4px', marginRight: '5px' }} />
+                      Admin Panel
+                    </a>
+                  </li>
+                )}
               </>
             )}
             
             <li className="nav-item">
               <a className="nav-link nav-link-large" href="/gallery">
-              <CollectionsIcon style={{ fontSize: '24px', verticalAlign: 'middle', marginRight: '5px' }} />
+              <CollectionsIcon style={{ fontSize: '24px', verticalAlign: '-4px', marginRight: '5px' }} />
               Gallery</a>
             </li>
             
@@ -81,7 +91,7 @@ const Navbar = () => {
             ) : (
               <li className="nav-item px-2">
                 <a href="/profile">
-                  <AccountCircleIcon style={{ color: 'black', fontSize: '50px', cursor: 'pointer' }} />
+                  <AccountCircleIcon style={{ color: 'gray', fontSize: '50px', cursor: 'pointer' }} />
                 </a>
               </li>
             )}
