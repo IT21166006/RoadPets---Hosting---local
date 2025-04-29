@@ -16,6 +16,7 @@ import Petdashboard from './components/Petdashboard'
 import ForgotPassword from './pages/Forgotpassword';
 import ResetPassword from './pages/ResetPassword';
 import Store from './pages/Store'
+import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -53,10 +54,18 @@ function App() {
             <Profile />
           </ProtectedRoute>
         } />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={
+          <ProtectedAdminRoute>
+            <AdminDashboard />
+          </ProtectedAdminRoute>
+        } />
         {/* Catch all route - redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <Footer />
     </Router>
   );
