@@ -34,7 +34,7 @@ function Login() {
                 }
                 navigate('/profile');
             } else {
-                setError('Invalid response from server');
+                setError('Invalid Email Or Password');
             }
         } catch (error) {
             console.error('Login error details:', {
