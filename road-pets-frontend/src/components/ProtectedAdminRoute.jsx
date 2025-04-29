@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 const ProtectedAdminRoute = ({ children }) => {
-  // Replace this with your actual auth logic
-  const isAdmin = localStorage.getItem('userRole') === 'admin';
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isAdmin = user && user.role === 'admin';
   
   if (!isAdmin) {
     return <Navigate to="/login" replace />;
