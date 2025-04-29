@@ -71,7 +71,7 @@ const PostList = () => {
       <Banner />
       <hr />
       <h2 className="mt-4">Community Posts</h2>
-      
+
       <br></br>
 
       {/* Search Bar */}
@@ -79,7 +79,7 @@ const PostList = () => {
         <input
           type="text"
           className="form-control w-50 "
-          placeholder="Search by location"
+          placeholder="Search by location..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{ backgroundColor: 'transparent', borderColor: 'lightgray' }}
@@ -96,15 +96,15 @@ const PostList = () => {
             <div key={post._id} className="col-md-3 mb-4">
               <div className="card shadow-sm">
                 <div className="card-body">
-                  <h5 className="card-title"><PersonIcon/>{post.name}</h5>
+                  <h5 className="card-title"><PersonIcon />{post.name}</h5>
                   <p className="card-text"><strong> </strong> {post.description}</p>
                   <br></br>
-                  
+
                   {/* Bootstrap Carousel for Images */}
                   {post.images && post.images.length > 0 ? (
-                    <div 
-                      id={`carousel-${post._id}`} 
-                      className="carousel slide" 
+                    <div
+                      id={`carousel-${post._id}`}
+                      className="carousel slide"
                       data-bs-ride="false"
                       data-bs-interval="false"
                     >
@@ -122,12 +122,12 @@ const PostList = () => {
                           ))}
                         </div>
                       )}
-                      
+
 
                       <div className="carousel-inner">
                         {post.images.map((img, index) => (
-                          <div 
-                            key={index} 
+                          <div
+                            key={index}
                             className={`carousel-item ${index === 0 ? 'active' : ''}`}
                           >
                             <div className="image-wrapper">
@@ -144,7 +144,7 @@ const PostList = () => {
                           </div>
                         ))}
                       </div>
-                      
+
 
                       {post.images.length > 1 && (
                         <>
@@ -181,9 +181,9 @@ const PostList = () => {
 
                   {/* Post Details */}
                   <br></br>
-                  <p className="card-text"><strong><PhoneIcon/> Phone: </strong> {post.phoneNumber}</p>
-                  <p className="card-text"><strong><LocationOnIcon/> Location: </strong> {post.location}</p>
-                  
+                  <p className="card-text"><strong><PhoneIcon /> Phone: </strong> {post.phoneNumber}</p>
+                  <p className="card-text"><strong><LocationOnIcon /> Location: </strong> {post.location}</p>
+
                 </div>
               </div>
             </div>
@@ -209,21 +209,14 @@ const PostList = () => {
         </nav>
       )}
 
-<div className="container-fluid">
-      <h2 className="mt-4">Projects</h2>
-      <hr />
-      <br></br>
-      <Projects />
-
+      <div className="container-fluid">
+        <h2 className="mt-4">Projects</h2>
+        <hr />
+        <br></br>
+        <Projects />
       </div>
-
-
-      {/* Footer section */}
-      <br></br>
-      <br></br>
-      
     </div>
-    
+
   );
 };
 
