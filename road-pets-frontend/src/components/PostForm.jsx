@@ -240,7 +240,7 @@ const PostForm = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-8">
             <div className="card shadow-sm">
                 <div className="card-body">
                     <h2 className="text-center mb-4">Create a Post</h2>
