@@ -19,6 +19,7 @@ import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import CharityRegfrom from './components/Charity/CharityRegform'
 
 
+
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('token') !== null;
