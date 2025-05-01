@@ -94,7 +94,6 @@
 
 /* Ensure indicators are visible */
 .carousel-indicators {
- 
   padding: 5px;
   border-radius: 10px;
 }
@@ -108,4 +107,233 @@
 .carousel-item {
   flex: 0 0 100%;
   width: 100%;
+}
+
+.sidebar {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  height: 100%;
+}
+
+.sidebar h4 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar .social-links a {
+  transition: all 0.3s ease;
+}
+
+.sidebar .social-links a:hover {
+  opacity: 0.8;
+}
+
+.chat-box {
+  background-color: white;
+  border: 1px solid #dee2e6 !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 400px; /* Increased height */
+  max-height: 400px; /* Set maximum height */
+}
+
+.message {
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  transition: all 0.2s ease;
+  word-break: break-word;
+}
+
+.message:hover {
+  transform: translateX(2px);
+}
+
+.message small {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Anonymous vs Registered user styles */
+.message.anonymous {
+  background-color: #f8f9fa;
+}
+
+.message.registered {
+  background-color: #e3f2fd;
+}
+
+/* Input group styles */
+.chat-box .input-group {
+  border-top: 1px solid #dee2e6;
+  padding-top: 10px;
+  margin-top: auto; /* Push input to bottom */
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+.chat-box .input-group .form-control:focus {
+  box-shadow: none;
+  border-color: #90A4AE;
+}
+
+.chat-box .btn-primary {
+  background-color: #ff914d;
+  border-color: #ff914d;
+}
+
+.chat-box .btn-primary:hover {
+  background-color: #ff8033;
+  border-color: #ff8033;
+}
+
+/* Popular posts styles */
+.popular-posts {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.popular-posts .card {
+  transition: transform 0.2s ease;
+}
+
+.popular-posts .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popular-posts .card-body {
+  padding: 0.5rem;
+}
+
+.popular-posts .card-title {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+/* Post highlight animation */
+@keyframes highlightPost {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 145, 77, 0);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(255, 145, 77, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 145, 77, 0);
+  }
+}
+
+.highlight-post {
+  animation: highlightPost 2s ease-in-out;
+}
+
+/* Hover effects */
+.hover-effect {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Sidebar popular post image styles */
+.popular-post-image-container {
+  overflow: hidden;
+  border-radius: 4px;
+  aspect-ratio: 16/9;
+}
+
+.popular-post-image {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Chat styles */
+.messages-container {
+  scrollbar-width: thin;
+  scrollbar-color: #90A4AE #CFD8DC;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  height: 320px; /* Increased height for messages container */
+  flex-grow: 1; /* Allow container to grow */
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #CFD8DC;
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background-color: #90A4AE;
+  border-radius: 4px;
+}
+
+.message {
+  transition: all 0.2s ease;
+  word-break: break-word;
+}
+
+.message:hover {
+  transform: translateX(2px);
+}
+
+.message small {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Anonymous vs Registered user styles */
+.message.anonymous {
+  background-color: #f8f9fa;
+}
+
+.message.registered {
+  background-color: #e3f2fd;
+}
+
+/* Input group styles */
+.chat-box .input-group {
+  border-top: 1px solid #dee2e6;
+  padding-top: 10px;
+}
+
+.chat-box .input-group .form-control:focus {
+  box-shadow: none;
+  border-color: #90A4AE;
+}
+
+.chat-box .btn-primary {
+  background-color: #ff914d;
+  border-color: #ff914d;
+}
+
+.chat-box .btn-primary:hover {
+  background-color: #ff8033;
+  border-color: #ff8033;
 }
