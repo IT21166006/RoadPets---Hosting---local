@@ -12,6 +12,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import fs from 'fs';
+import chatRoutes from './routes/chatRoutes.js';
 
 dotenv.config();
 
@@ -30,8 +31,8 @@ app.use(cors({
 }));
 
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
 // Create uploads directory if it doesn't exist
@@ -65,6 +66,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/protected', protectedRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/pets', petRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Add this to your existing middleware setup
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
