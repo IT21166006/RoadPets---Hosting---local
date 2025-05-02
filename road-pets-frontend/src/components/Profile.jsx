@@ -250,7 +250,7 @@ function Profile() {
                                 </div>
                             </Card.Header>
                             <Card.Body>
-                                <h5 className="card-title"><PersonIcon/>{post.name}</h5>
+                                
                                 
                                 {/* Post Images */}
                                 {post.images && post.images.length > 0 && (
