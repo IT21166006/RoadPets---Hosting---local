@@ -105,9 +105,9 @@ const PostList = () => {
                 <div className="card shadow-sm">
                   <div className="card-body">
                     <h5 className="card-title"><PersonIcon />{post.name}</h5>
+                    <hr />
                     <p className="card-text"><strong> </strong> {post.description}</p>
-                    <br></br>
-
+                    
                     {/* Bootstrap Carousel for Images */}
                     {post.images && post.images.length > 0 ? (
                       <div
@@ -188,7 +188,7 @@ const PostList = () => {
                     {/* Post Details */}
                     <br></br>
                     <p className="card-text"><strong><PhoneIcon /> Phone: </strong> {post.phoneNumber}</p>
-                    <p className="card-text"><strong><LocationOnIcon /> Location: </strong> {post.location}</p>
+                    <p className="card-text"><strong><LocationOnIcon /> Location: </strong> {post.location.length > 20 ? post.location.slice(0, 20) + '...' : post.location}</p>
 
                   </div>
                 </div>
