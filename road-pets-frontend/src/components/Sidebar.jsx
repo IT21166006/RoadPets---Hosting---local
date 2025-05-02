@@ -5,6 +5,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
+import shoppic from '../asserts/shop.png'
+
 
 const Sidebar = () => {
   const [popularPosts, setPopularPosts] = useState([]);
@@ -339,7 +341,18 @@ const Sidebar = () => {
               {newMessage.length}/500 characters
             </small>
           </form>
-        </div>
+        </div> 
+      </div>
+
+      <div className="mb-5 text-center" >
+       
+          <img 
+            src={shoppic} 
+            alt="shoppic" 
+            className="mx-auto rounded-full w-full max-w-[350px] h-auto object-cover"
+            style={{ aspectRatio: '1/1' }}
+          />
+        
       </div>
     </div>
   );
