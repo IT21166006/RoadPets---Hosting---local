@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const charitySchema = new mongoose.Schema({
   charityName: {
@@ -7,7 +7,7 @@ const charitySchema = new mongoose.Schema({
     trim: true
   },
   charityType: {
-    type: String, 
+    type: String,
     required: true,
     enum: ["Animal Welfare", "Animal Health", "Environmental", "Education", "Health", "Other"]
   },
@@ -16,21 +16,25 @@ const charitySchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  websiteLinks: {
-    type: String
+  websiteLink: {
+    type: String,
+    required: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
+    match: /^\S+@\S+\.\S+$/ // basic email validation
   },
   phone: {
     type: String,
-    required: true
+    required: true,
+
   },
   address: {
-    type: String
+    type: String,
+    required: true
   },
   contactPersonName: {
     type: String,
@@ -42,30 +46,19 @@ const charitySchema = new mongoose.Schema({
   description: {
     type: String
   },
-  logo: {
-    type: String // URL to stored image
-  },
-  proof: {
-    type: String // URL to stored document
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'approved', 'rejected'],
-    default: 'pending'
-  },
+  logo: [{
+    type: String,  // This will store base64 strings
+    required: true
+  }],
+  proof: [{
+    type: String,  // This will store base64 strings
+    required: true
+  }],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
   }
-});
+}, { timestamps: true }); // Automatically adds createdAt and updatedAt
 
-module.exports = mongoose.model('Charity', charitySchema); 
+export default mongoose.model('Charity', charitySchema);
