@@ -30,6 +30,7 @@ const StatsContainer = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+    
   }
 `;
 
