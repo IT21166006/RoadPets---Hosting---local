@@ -185,9 +185,7 @@ const Sidebar = () => {
           <a href="#" className="text-primary text-decoration-none">
             <FacebookIcon /> Facebook
           </a>
-          <a href="#" className="text-info text-decoration-none">
-            <TwitterIcon /> Twitter
-          </a>
+         
           <a href="#" className="text-danger text-decoration-none">
             <InstagramIcon /> Instagram
           </a>
@@ -253,12 +251,8 @@ const Sidebar = () => {
       {/* Public Chat Section */}
       <div className="mb-5">
         <h4 className="border-bottom pb-2 " >
-          Public Chat
-          {currentUser && (
-            <small className="text-muted ms-2">
-              (Chatting as {currentUser.username || currentUser.name})
-            </small>
-          )}
+          Public Chat Room
+         
         </h4>
         <div className="chat-box border rounded p-3" style={{ height: '1000px' }}>
           <div 
@@ -282,7 +276,7 @@ const Sidebar = () => {
               </div>
             ) : (
               <>
-                {messages.map((msg, index) => (
+                {[...messages].reverse().map((msg, index) => (
                   <div 
                     key={msg._id || index} 
                     className={`message mb-2 p-2 rounded ${msg.isAnonymous ? 'anonymous' : 'registered'}`}
