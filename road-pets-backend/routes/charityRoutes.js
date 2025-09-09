@@ -1,153 +1,141 @@
-const express = require('express');
+import express from 'express';
+import Post from '../models/Charity.js';
+import { authenticateToken } from '../middleware/auth.js';
+
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const auth = require('../middleware/auth');
-const adminAuth = require('../middleware/adminAuth');
-const Charity = require('../models/Charity');
 
-// Configure multer for file upload
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const uploadDir = 'uploads/charity';
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+// Create charity route
+router.post('/', authenticateToken, async (req, res) => {
+    try {
+        console.log('Request body:', req.body);
+        console.log('Images received:', req.body.images ? req.body.images.length : 0);
+        console.log('First image sample:', req.body.images ? req.body.images[0]?.substring(0, 100) + '...' : 'No images');
+
+        // Validate required fields
+        if (!req.body.name || !req.body.description || !req.body.location || !req.body.phoneNumber || !req.body.images) {
+            return res.status(400).json({ 
+                message: 'Missing required fields',
+                received: req.body 
+            });
+        }
+
+        // Create new post with base64 images
+        const newPost = new Post({
+            name: req.body.name,
+            description: req.body.description,
+            location: req.body.location,
+            phoneNumber: req.body.phoneNumber,
+            images: req.body.images, // Array of base64 strings
+            user: req.user.userId
+        });
+
+        // Save post
+        const savedPost = await newPost.save();
+        console.log('Saved post:', savedPost);
+        console.log('Saved images count:', savedPost.images.length);
+        console.log('First saved image sample:', savedPost.images[0]?.substring(0, 100) + '...');
+
+        res.status(201).json(savedPost);
+    } catch (error) {
+        console.error('Error creating post:', error);
+        res.status(500).json({ 
+            message: 'Error creating post', 
+            error: error.message,
+            stack: error.stack 
+        });
     }
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
 });
 
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter: (req, file, cb) => {
-    if (file.fieldname === "logo") {
-      if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-        return cb(new Error('Please upload an image file'));
-      }
-    } else if (file.fieldname === "proof") {
-      if (!file.originalname.match(/\.(pdf|jpg|jpeg|png)$/)) {
-        return cb(new Error('Please upload a PDF or image file'));
-      }
-    }
-    cb(null, true);
-  }
-});
-
-// Submit charity registration request
-router.post('/register', auth, upload.fields([
-  { name: 'logo', maxCount: 1 },
-  { name: 'proof', maxCount: 1 }
-]), async (req, res) => {
-  try {
-    const charityData = {
-      ...req.body,
-      userId: req.user._id,
-      logo: req.files?.logo ? `/uploads/charity/${req.files.logo[0].filename}` : null,
-      proof: req.files?.proof ? `/uploads/charity/${req.files.proof[0].filename}` : null
-    };
-
-    const charity = new Charity(charityData);
-    await charity.save();
-
-    res.status(201).json({
-      message: 'Charity registration request submitted successfully',
-      charity
-    });
-  } catch (error) {
-    console.error('Error in charity registration:', error);
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Get all charities (public)
+// Get all posts
 router.get('/', async (req, res) => {
-  try {
-    const charities = await Charity.find({ status: 'approved' })
-      .select('-proof'); // Don't send proof document to client
-    res.json(charities);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get single charity details (public)
-router.get('/:id', async (req, res) => {
-  try {
-    const charity = await Charity.findById(req.params.id)
-      .select('-proof');
-    if (!charity) {
-      return res.status(404).json({ message: 'Charity not found' });
+    try {
+        const posts = await Post.find().sort({ createdAt: -1 });
+        res.json(posts);
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Error fetching posts' });
     }
-    res.json(charity);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
 
-// Admin routes
-// Get all charity requests
-router.get('/admin/requests', adminAuth, async (req, res) => {
-  try {
-    const requests = await Charity.find()
-      .sort({ createdAt: -1 });
-    res.json(requests);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Approve charity request
-router.post('/admin/requests/:id/approve', adminAuth, async (req, res) => {
-  try {
-    const charity = await Charity.findById(req.params.id);
-    if (!charity) {
-      return res.status(404).json({ message: 'Charity request not found' });
+// Get user's posts
+router.get('/user', authenticateToken, async (req, res) => {
+    try {
+        const posts = await Post.find({ user: req.user.userId })
+            .sort({ createdAt: -1 });
+        res.json(posts);
+    } catch (error) {
+        console.error('Error fetching user posts:', error);
+        res.status(500).json({ error: 'Error fetching posts' });
     }
-
-    charity.status = 'approved';
-    charity.updatedAt = Date.now();
-    await charity.save();
-
-    res.json({ message: 'Charity request approved successfully', charity });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
 
-// Reject charity request
-router.post('/admin/requests/:id/reject', adminAuth, async (req, res) => {
-  try {
-    const charity = await Charity.findById(req.params.id);
-    if (!charity) {
-      return res.status(404).json({ message: 'Charity request not found' });
+// Update post
+router.put('/:id', authenticateToken, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        // Check if user is admin or the post owner
+        if (req.user.role !== 'admin' && post.user.toString() !== req.user.userId) {
+            return res.status(403).json({ error: 'Unauthorized to update this post' });
+        }
+
+        const updatedPost = await Post.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        );
+
+        res.json(updatedPost);
+    } catch (error) {
+        console.error('Error updating post:', error);
+        res.status(500).json({ error: 'Error updating post' });
     }
-
-    charity.status = 'rejected';
-    charity.updatedAt = Date.now();
-    await charity.save();
-
-    res.json({ message: 'Charity request rejected successfully', charity });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
 
-// Get user's charity
-router.get('/user/charity', auth, async (req, res) => {
-  try {
-    const charity = await Charity.findOne({ userId: req.user._id });
-    if (!charity) {
-      return res.status(404).json({ message: 'No charity found for this user' });
+// Delete post
+router.delete('/:id', authenticateToken, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        // Check if user is admin or the post owner
+        if (req.user.role !== 'admin' && post.user.toString() !== req.user.userId) {
+            return res.status(403).json({ error: 'Unauthorized to delete this post' });
+        }
+
+        await Post.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        res.status(500).json({ error: 'Error deleting post' });
     }
-    res.json(charity);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
 
-module.exports = router; 
+// Find By Location
+
+// Find posts by location
+router.get('/location/:location', async (req, res) => {
+    const { location } = req.params;
+
+    try {
+        // Find posts that match the specified location
+        const posts = await Post.find({ location }).sort({ createdAt: -1 });
+
+        if (posts.length === 0) {
+            return res.status(404).json({ message: 'No posts found for this location.' });
+        }
+
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+export default router;
