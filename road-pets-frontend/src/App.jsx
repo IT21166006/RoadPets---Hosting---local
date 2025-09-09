@@ -17,6 +17,7 @@ import ResetPassword from './pages/ResetPassword';
 import Store from './pages/Store'
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import CharityRegfrom from './components/Charity/CharityRegform'
+import Itemdescription from './components/Shop/Shopitemdescription'
 
 
 
@@ -52,7 +53,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/charityreg" element={<CharityRegfrom />} />
-        
+        <Route path="/itemdescription" element={<Itemdescription />} />
         <Route path="/profile" element={
           <ProtectedRoute>
             <Profile />
