@@ -23,7 +23,7 @@ const __dirname = dirname(__filename);
 
 // CORS Configuration with more specific settings
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: ['https://roadpetsfrontend.netlify.app'],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"],
