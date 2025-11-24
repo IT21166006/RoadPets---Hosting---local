@@ -44,8 +44,10 @@ Cloud/OnRender Hosting
 https://roadpetslk.dpdns.org/
 
 📷 Screenshots
+<img width="1323" height="621" alt="image" src="https://github.com/user-attachments/assets/ed5c6539-9c11-4d70-81df-155dbc0b5a29" />
 
-(Add screenshots here if you want — I can generate preview banners too.)
+<img width="1331" height="634" alt="image" src="https://github.com/user-attachments/assets/8a35ed13-15d0-4bac-8a5c-21f538d3a05b" />
+
 
 🧩 System Flow (High-Level)
 User → Register/Login → Create Lost/Found Pet Post  
